@@ -1,0 +1,20 @@
+{{#if selected}}
+  {{#if placeholder}}
+    <label>{{placeholder}}</label>
+  {{/if}}
+{{/if}}
+{{#power-select selected=selected
+                placeholder=placeholder
+                search=search
+                onchange=(action (mut selected)) as |selected|}}
+{{get selected labelField}}
+{{/power-select}}
+
+<p>
+  {{#each selections as |selection|}}
+    <span class="chip">
+      {{get selection labelField}}
+      {{fa-icon "times" class="pointer" click=(action "removeSelection" selection)}}
+    </span>
+  {{/each}}
+</p>

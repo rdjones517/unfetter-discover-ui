@@ -1,0 +1,82 @@
+<div class="container">
+{{help-card help=model.help}}
+<h4>
+  {{stix-object-icon objectType="course-of-action"}}
+
+  {{model.item.name}}
+</h4>
+
+{{#md-card id=model.item.id}}
+    {{#md-card-content}}
+
+    <div class="row">
+      <div class="col">
+        <p>Labels</p>
+        <p>
+        {{#if model.item.labels}}
+            {{#each model.item.labels as |label|}}
+              <div class="chip">{{label}}</div>
+            {{/each}}
+        {{/if}}
+        </p>
+      </div>
+    </div>
+  <div class="row">
+      <div class="col">
+        <p>Rating Labels</p>
+        <p>
+        {{#if model.item.x_unfetter_rating_labels}}
+            {{#each model.item.x_unfetter_rating_labels as |x_unfetter_rating_label|}}
+              <div class="chip">{{x_unfetter_rating_label}}</div>
+            {{/each}}
+        {{/if}}
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <p>External References</p>
+        <p>
+        {{#if model.item.external_references}}
+            {{#each model.item.external_references as |external_reference|}}
+              <div class="chip">{{external_reference.source_name}}</div>
+              {{#if external_reference.url}}
+                <a target="_blank" href="{{external_reference.url}}">{{external_reference.external_id}}</a>
+              {{else}}
+                {{external_reference.external_id}}
+              {{/if}}
+            {{/each}}
+        {{/if}}
+        </p>
+      </div>
+    </div>
+<div class="row">
+  <div class="col s6">
+    <a class="btn waves-effect waves-light" a href="/unfetter-discover-api/bundles/course-of-actions/{{model.item.id}}" download ="{{model.item.id}}.json" target="_blank">
+      Download
+    </a>
+  </div>
+</div>
+{{/md-card-content}}
+{{/md-card}}
+<div class="right-align grey-text">{{model.item.id}}</div>
+
+<h4>Relationships</h4>
+{{#each model.targetRelationshipObjects as |relatedObject|}}
+  <p>
+    <a href="/cti-stix-ui/{{relatedObject.type}}s/{{relatedObject.id}}">
+      {{stix-object-item objectType=relatedObject.type label=relatedObject.name}}
+    </a>
+  </p>
+{{/each}}
+
+{{#each model.sourceRelationshipObjects as |relatedObject|}}
+  <p>
+    <a href="/cti-stix-ui/{{relatedObject.type}}s/{{relatedObject.id}}">
+      {{stix-object-item objectType=relatedObject.type label=relatedObject.name}}
+    </a>
+  </p>
+{{/each}}
+
+</div>

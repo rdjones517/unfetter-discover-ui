@@ -1,0 +1,77 @@
+{{#navigation-bar}}
+  <div class="container">
+    {{#link-to "index" class="brand-logo"}}
+      <img src="/unfetter-discover-ui/brand-logo.png" />
+    {{/link-to}}
+
+    <a class="button-collapse" data-activates="side-nav">
+      <i class="material-icons">menu</i>
+    </a>
+
+    <ul id="settings-dropdown" class="dropdown-content">
+
+      {{#link-to "course-of-actions" tagName="li"}}
+        {{link-to "Course of Action" "course-of-actions"}}
+      {{/link-to}}
+      {{#link-to "link-explorer" tagName="li"}}
+        {{link-to "Link Explorer" "link-explorer"}}
+      {{/link-to}}
+      {{#link-to "relationship-explorer" tagName="li"}}
+        {{link-to "Relationship Explorer" "relationship-explorer"}}
+      {{/link-to}}
+      <li>
+        <a href="/cti-stix-ui/" target="_blank" >STIX Objects</a>
+      </li>
+    </ul>
+
+
+    <ul class="right hide-on-med-and-down">
+      {{#link-to "campaigns-dashboard" tagName="li"}}
+        {{link-to "Campaign Dashboard" "campaigns-dashboard"}}
+      {{/link-to}}
+      {{#link-to "reports" tagName="li"}}
+        {{link-to "Reports" "reports"}}
+      {{/link-to}}
+      {{#link-to "intrusion-sets-dashboard" tagName="li"}}
+        {{link-to "Intrusion Set Dashboard" "intrusion-sets-dashboard"}}
+      {{/link-to}}
+      <li>
+        <a class="dropdown-button" href="#settings-dropdown" data-activates="settings-dropdown">
+          Settings
+          <i class="material-icons right">arrow_drop_down</i>
+        </a>
+      </li>
+      {{#link-to "partners" tagName="li"}}
+        {{link-to "Partners" "partners"}}
+      {{/link-to}}
+    </ul>
+  </div>
+
+  <ul class="side-nav" id="side-nav">
+    {{#link-to "campaigns-dashboard" tagName="li"}}
+      {{link-to "Campaign Dashboard" "campaigns-dashboard"}}
+    {{/link-to}}
+    {{#link-to "reports" tagName="li"}}
+      {{link-to "Reports" "reports"}}
+    {{/link-to}}
+      {{#link-to "intrusion-sets-dashboard" tagName="li"}}
+        {{link-to "Intrusion Set Dashboard" "intrusion-sets-dashboard"}}
+      {{/link-to}}
+ 
+    {{#link-to "course-of-actions" tagName="li"}}
+      {{link-to "Course of Action" "course-of-actions"}}
+    {{/link-to}}
+    {{#link-to "link-explorer" tagName="li"}}
+      {{link-to "Link Explorer" "link-explorer"}}
+    {{/link-to}}
+    {{#link-to "relationship-explorer" tagName="li"}}
+      {{link-to "Relationship Explorer" "relationship-explorer"}}
+    {{/link-to}}
+    <li>
+      <a href="/cti-stix-ui/" target="_blank" >STIX Objects</a>
+    </li>
+    {{#link-to "partners" tagName="li"}}
+      {{link-to "Partners" "partners"}}
+    {{/link-to}}
+  </ul>
+{{/navigation-bar}}

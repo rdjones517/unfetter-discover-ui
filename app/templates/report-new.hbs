@@ -1,0 +1,117 @@
+<div class="container">
+  {{help-card help=model.help}}
+  <h4>
+    {{stix-object-icon objectType="report"}}
+    {{#if confirmationStep}}
+      Report Summary
+    {{else}}
+      Select Courses of Action
+    {{/if}}
+  </h4>
+
+  {{#unless confirmationStep}}
+    {{#liquid-bind currentCourseOfActions class="row" use=pageTransition}}
+      <div class="col s12">
+        {{#each currentCourseOfActions as |courseOfAction|}}
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">
+                {{courseOfAction.name}}
+              </span>
+
+              <div>
+                <strong>{{courseOfAction.external_references.0.source_name}}</strong>
+                &bull;
+                {{courseOfAction.external_references.0.external_id}}
+              </div>
+
+              <div class="card-description">
+                {{courseOfAction.description}}
+              </div>
+
+              <div class="text-muted center-align course-of-action-rating-label">Implementation Rating</div>
+              {{#md-radios selection=courseOfAction.ratingMarkingDefinition}}
+                <table class="responsive-table course-of-action-rating">
+                  <tbody>
+                    <tr>
+                  {{#each model.ratingMarkingDefinitions as |ratingMarking|}}
+                    <td>{{get-array-value courseOfAction.x_unfetter_rating_labels ratingMarking.definition.rating}}
+                      {{md-radio value=ratingMarking}}
+                    </td>
+                  {{/each}}
+                    </tr>
+                  </tbody>
+                </table>
+              {{/md-radios}}
+            </div>
+
+          </div>
+        {{/each}}
+      </div>
+    {{/liquid-bind}}
+  {{/unless}}
+
+  {{#if confirmationStep}}
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">Report Description</span>
+      <div class="row">
+        {{md-input label="Name"
+                   value=model.item.name
+                   required=true
+                   validate=true
+                   class="col s8"}}
+        {{input-date-field label="Published"
+                           dateValue=model.item.published
+                           required=true
+                           validate=true
+                           class="col s4"}}
+      </div>
+    </div>
+  </div>
+
+  <h5>Courses of Action with Selected Ratings</h5>
+
+  <p>The ratings selected for each Course of Action influence the scoring for associated Attack Patterns</p>
+
+  {{#md-collection content=courseOfActionsSorted as |courseOfAction|}}
+    <div class="collection-item">
+      {{fa-icon courseOfAction.ratingMarkingDefinition.icon
+                class=courseOfAction.ratingMarkingDefinition.labelClassName
+                fixedWidth=true}}
+
+      <strong>{{courseOfAction.name}}</strong>
+      {{#if courseOfAction.external_references.0.source_name}}
+      &bull;
+      {{courseOfAction.external_references.0.source_name}}
+      &bull;
+      {{courseOfAction.external_references.0.external_id}}
+      {{/if}}
+      <div class="secondary-content right-align">
+        {{courseOfAction.ratingMarkingDefinition.definition.label}}
+      </div>
+    </div>
+  {{/md-collection}}
+
+  {{/if}}
+
+  <div class="right-align button-group">
+    {{#if confirmationStep}}
+      {{#link-to "report-new" (query-params page=page step="selection") class="btn waves-effect waves-light background-indicator" disabled=previousPageDisabled }}Back{{/link-to}}
+    {{else}}
+      {{#link-to "report-new" (query-params page=previousPage step="selection") class="btn waves-effect waves-light background-indicator" disabled=previousPageDisabled }}Back{{/link-to}}
+    {{/if}}
+
+    {{#if nextPageDisabled}}
+      {{#if confirmationStep}}
+        <button class="btn waves-effect waves-light" {{action "save" model.item}}>Save</button>
+      {{else}}
+        {{#link-to "report-new" (query-params step="confirmation") class="btn waves-effect waves-light"}}Next{{/link-to}}
+      {{/if}}
+    {{else}}
+      {{#link-to "report-new" (query-params page=nextPage) class="btn waves-effect waves-light" }}Next{{/link-to}}
+    {{/if}}
+  </div>
+
+  {{alert-card alert=model.alert}}
+</div>

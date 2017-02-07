@@ -1,0 +1,187 @@
+<div class="row flex-container">
+  <div class="col s12 m6 l2 side-column">
+    <div class="row">
+      <div class="col s12">
+        <h5 class="text-muted">Intrusion Sets</h5>
+      </div>
+    </div>
+    {{#each intrusionSets as |intrusionSet|}}
+      <div class="row">
+        <div class="col s2">
+          {{md-check checked=intrusionSet.selected}}
+        </div>
+        <div class="col s10">
+          {{#link-to (query-params intrusionSetId=intrusionSet.id) class=(if (equals intrusionSet.id intrusionSetId) "intrusion-set-selected")}}
+            {{intrusionSet.name}}
+          {{/link-to}}
+        </div>
+      </div>
+    {{/each}}
+  </div>
+  <div class="col s12 m6 l10 main-column">
+    <h4 class="intrusion-set-label">
+      {{stix-object-icon objectType="intrusion-set"}}
+      Intrusion Set
+      &bull;
+      <strong>{{intrusionSet.name}}</strong>
+    </h4>
+    <div class="row attack-pattern-label">
+      <div class="col s3">
+        <h5>Attack Patterns Used</h5>
+      </div>
+      <div class="col s1 right-align">
+        <h5>{{percentAttackPatternsUsed}}%</h5>
+      </div>
+      <div class="col s4">
+        <div class="progress attack-pattern-progress attack-pattern-progress-header">
+          <div class="determinate" style={{style-width percentAttackPatternsUsed}}></div>
+        </div>
+      </div>
+      <div class="col s2">
+        <h5>
+        {{usesAttackPatternRelationships.length}}
+        of
+        {{model.attackPatterns.length}}
+        </h5>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s12">
+        <h6 class="attack-pattern-label">
+          <strong>Kill Chain Phases Used</strong>
+        </h6>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s12">
+        {{#each-in intrusionSetPhaseNameAttackPatterns as |phaseName phaseNameDescription|}}
+          <div class="phase-name-used-card left" style={{style-background-color-alpha 35 159 221 phaseNameDescription.attackPatternsUsedPercentRounded}}>
+              <div class="truncate label">{{undasherize-label phaseName}}</div>
+              <div>
+                {{phaseNameDescription.attackPatternsUsedPercentRounded}}%
+                &bull;
+                {{phaseNameDescription.attackPatternsUsedNumber}}
+                of
+                {{phaseNameDescription.attackPatterns.length}}
+              </div>
+          </div>
+        {{/each-in}}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s12">
+        {{#if attackPatternsExpanded}}
+            {{#link-to (query-params attackPatternsExpanded=false)}}
+            {{fa-icon "caret-down" fixedWidth=true}}
+            <strong>Hide Attack Patterns</strong>
+            {{/link-to}}
+        {{else}}
+            {{#link-to (query-params attackPatternsExpanded=true)}}
+            {{fa-icon "caret-right" fixedWidth=true}}
+            <strong>Show Attack Patterns</strong>
+            {{/link-to}}
+        {{/if}}
+      </div>
+    </div>
+
+    {{#if attackPatternsExpanded}}
+    <div class="row">
+      <div class="col s12">
+        <table class="dashboard-table">
+          <tbody>
+            <tr>
+            {{#each-in intrusionSetPhaseNameAttackPatterns as |phaseName phaseNameDescription|}}
+            <td class="dashboard-column">
+              {{#each phaseNameDescription.attackPatterns as |attackPattern|}}
+              {{#tooltip-block tooltip=attackPattern.name class=(if attackPattern.relationship "attack-pattern-used-item dashboard-column-item" "dashboard-column-item")}}
+                {{attackPattern.name}}
+              {{/tooltip-block}}
+              {{/each}}
+            </td>
+            {{/each-in}}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {{/if}}
+
+    <div class="row">
+      <div class="col s6">
+        {{wind-rose-plot labels=intrusionSetPhaseNamePlot.labels
+                         values=intrusionSetPhaseNamePlot.values
+                         ticksCount=intrusionSetPhaseNamePlot.labels.length
+                         markerColor="#239fdd"
+                         ticksuffix="%"
+                         width=550
+                         height=400
+                         marginTop=20
+                         marginBottom=20
+                         marginLeft=80
+                         marginRight=80}}
+      </div>
+      <div class="col s6">
+        {{wind-rose-plot data=intrusionSetsSelectedPlotData
+                         ticksCount=intrusionSetPhaseNamePlot.labels.length
+                         showlegend=true
+                         markerColor="#239fdd"
+                         ticksuffix="%"
+                         width=550
+                         height=400
+                         marginTop=20
+                         marginBottom=20
+                         marginLeft=80
+                         marginRight=100}}
+      </div>
+    </div>
+
+    {{#each-in intrusionSetPhaseNameAttackPatterns as |phaseName phaseNameDescription|}}
+      <div class="row">
+        <div class="col s3">
+            {{#if (equals phaseName phaseNameSelected)}}
+              {{#link-to (query-params phaseNameSelected=undefined)}}
+                {{fa-icon "caret-down" fixedWidth=true}}
+                <strong>{{undasherize-label phaseName}}</strong>
+              {{/link-to}}
+            {{else}}
+              {{#link-to (query-params phaseNameSelected=phaseName)}}
+                {{fa-icon "caret-right" fixedWidth=true}}
+                <strong>{{undasherize-label phaseName}}</strong>
+              {{/link-to}}
+            {{/if}}
+        </div>
+        <div class="col s1 right-align">
+          {{phaseNameDescription.attackPatternsUsedPercentRounded}}%
+        </div>
+        <div class="col s4 right-align">
+          <div class="progress attack-pattern-progress">
+            <div class="determinate" style={{style-width phaseNameDescription.attackPatternsUsedPercentRounded}}></div>
+          </div>
+        </div>
+        <div class="col s2 attack-pattern-label">
+          {{phaseNameDescription.attackPatternsUsedNumber}}
+          of
+          {{phaseNameDescription.attackPatterns.length}}
+        </div>
+      </div>
+      {{#if (equals phaseName phaseNameSelected)}}
+      <div class="row">
+        <div class="col s8">
+          <div class="card">
+            <div class="card-content">
+            {{#each phaseNameDescription.attackPatterns as |attackPattern|}}
+            <div class={{if attackPattern.relationship "attack-pattern-label strong"}}>
+              {{attackPattern.name}}
+            </div>
+            {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/if}}
+    {{/each-in}}
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col s12">
+    <h4>Most Recent Campaigns</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col s12">
+  {{#each linkedItems as |item|}}
+    <div class="campaign-card card">
+      <div class="card-content">
+        <h5>{{item.name}}</h5>
+        <p class="truncate campaign-description">
+          {{item.description}}
+        </p>
+        <p>
+          <strong>Objective</strong>:
+          {{#if item.objective}}
+            <span class="chip">{{item.objective}}</span>
+          {{else}}
+            <span>Unspecified</span>
+          {{/if}}
+        </p>
+        <p class="horizontal-center object-references-section">
+          {{#each-in item.relationshipObjectTypes as |objectType objectTypeReferences|}}
+            <span class="object-type-references">
+              <span class="object-type-references-number {{objectType}}-label">{{objectTypeReferences}}</span>
+              {{#tooltip-block tagName="span" tooltip=objectType}}
+                {{stix-object-icon objectType=objectType}}
+              {{/tooltip-block}}
+            </span>
+          {{/each-in}}
+        </p>
+        <p class="grey-text campaign-created">
+          Created &bull; {{moment-from-now item.created}}
+        </p>
+      </div>
+    </div>
+  {{/each}}
+  </div>
+</div>

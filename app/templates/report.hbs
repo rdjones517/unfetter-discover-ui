@@ -1,0 +1,37 @@
+<div class="container">
+  {{help-card help=model.help}}
+  <h4>
+    {{stix-object-icon objectType="report"}}
+    Report
+  </h4>
+  {{#md-card id=model.item.id}}
+    {{#md-card-content}}
+      <div class="row">
+        <div class="col s5">
+          {{model.item.name}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s5">
+          {{moment-format model.item.published "MMM-DD-YYYY  HH:MM"}}
+        </div>
+      </div>
+    {{/md-card-content}}
+    {{#md-card-action}}
+      {{#link-to "report-dashboard" model.item.id class="btn waves-effect waves-light"}}Dashboard{{/link-to}}
+    {{/md-card-action}}
+  {{/md-card}}
+  <div class="right-align grey-text">{{model.item.id}}</div>
+  {{#if model.item.object_refs}}
+    <h4>Selected Courses Of Action</h4>
+    {{#each model.courseObjects as |courseObject|}}
+      {{#md-card id=courseObject.id}}
+        {{#md-card-content}}
+          <h5>{{courseObject.name}}</h5>
+          <p>{{courseObject.description}}</p>
+        {{/md-card-content}}
+      {{/md-card}}
+      <div class="right-align grey-text">{{courseObject.id}}</div>
+    {{/each}}
+  {{/if}}
+</div>

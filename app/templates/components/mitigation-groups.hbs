@@ -1,0 +1,22 @@
+<table class="mitigation-groups">          
+  {{#each mitigationGroups as |mitigationGroup|}}
+    <tr>
+      <td class="right-align">
+        <span class="mitigation-percent-label {{mitigationGroup.className}}">
+          {{mitigationGroup.percent}}%
+        </span>
+      </td>
+      <td class="mitigation-label">
+          <span class="chart-label">
+          {{#if report}}
+            {{#link-to "report-mitigates-rating" report.id mitigationGroup.rating}}
+              {{mitigationGroup.label}}
+            {{/link-to}}
+          {{else}}
+            {{mitigationGroup.label}}
+          {{/if}}
+          </span>
+      </td>
+    </tr>      
+  {{/each}}
+</table>

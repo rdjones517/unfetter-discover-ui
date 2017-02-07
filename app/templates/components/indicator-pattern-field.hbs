@@ -1,0 +1,37 @@
+<div class="col s3">
+  {{#power-select selected=selectedObjectType
+                  placeholder="Indicator Object Type"
+                  options=objectTypes
+                  searchField="label"
+                  onchange=(action (mut selectedObjectType)) as |selectedObjectType|}}
+    {{selectedObjectType.label}}
+  {{/power-select}}
+</div>
+<div class="col s3">
+  {{#power-select selected=selectedObjectProperty
+                  placeholder="Indicator Object Property"
+                  options=objectProperties
+                  searchField="label"
+                  onchange=(action (mut selectedObjectProperty)) as |selectedObjectProperty|}}
+    {{selectedObjectProperty.label}}
+  {{/power-select}}
+</div>
+<div class="col s5">
+  {{md-input label="Indicator Object Value"
+             class="column-input-field"
+             value=selectedObjectValue
+             required=true
+             validate=true}}
+</div>
+<div class="col s1">
+  {{#md-btn buttonType="floating" action="add" isDisabled=addDisabled}}<i class="material-icons">add</i>{{/md-btn}}
+</div>
+
+<p>
+  {{#each indicators as |indicator|}}
+    <span class="chip">
+      {{indicator.pattern}}
+      {{fa-icon "times" class="pointer" click=(action "remove" indicator)}}
+    </span>
+  {{/each}}
+</p>

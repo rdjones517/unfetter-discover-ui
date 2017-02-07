@@ -1,0 +1,92 @@
+<div class="row flex-container">
+  <div class="col s12 m6 l3 side-column">
+    {{course-of-action-collection courseOfActions=model.courseOfActions
+                                  referencedObjects=referencedObjects
+                                  relatedCourseOfActions=relatedCourseOfActions}}
+  </div>
+  <div class="col s12 m6 l9 main-column">
+    {{help-card help=model.help}}
+    {{report-dashboard-header class="row" report=model.report}}
+
+    <table class="responsive-table centered phase-labels">
+      <thead>
+        <tr>
+          {{#each phaseNameGroups as |phaseNameGroup|}}
+            <th class="phase-label {{if phaseNameGroup.selected "selected"}}">
+              {{#link-to "report-kill-chain-phase" model.report.id phaseNameGroup.phaseName}}
+                {{undasherize-label phaseNameGroup.phaseName}}
+              {{/link-to}}
+            </th>
+          {{/each}}
+        </tr>
+      </thead>
+    </table>
+
+    <div class="row">
+      <div class="col s6">
+        <h5 class="phase-label">{{undasherize-label model.killChainPhase.phase_name}}</h5>
+      </div>
+      <div class="col s6">
+        <p class="right-align">
+          Attack Patterns
+          &bull;
+          <span class="text-muted">{{selectedAttackPatterns.length}}</span>
+        </p>
+      </div>
+    </div>
+    {{#liquid-bind model use="toDown"}}
+    <div class="row">
+      <div class="col s5">
+        <div class="mitigation-summary">
+          <div class="left">
+            {{pie-plot hole=0.65
+                       width=170
+                       height=170
+                       values=mitigations.values
+                       labels=mitigations.labels
+                       markerColors=mitigationsColors
+                       annotationText=mitigationScoreAdjusted
+                       annotationFontSize=25
+                       marginTop=5
+                       marginBottom=10
+                       plotlyClick=(action "mitigationPlotSelected")}}
+
+          </div>
+          <div class="left mitigation-groups-collection">
+            {{mitigation-groups mitigationGroups=mitigationGroups
+                                report=model.report}}
+          </div>
+        </div>
+
+        <ul class="attack-pattern-ratings clear">
+          {{#each selectedAttackPatterns as |attackPattern|}}
+            <li>
+              {{#tooltip-block class="attack-pattern-rating"
+                                computedClass=attackPattern.labelClass
+                                position="left"
+                                tooltip=attackPattern.rating.label}}
+                {{fa-icon attackPattern.icon}}
+              {{/tooltip-block}}
+
+              <div class="attack-pattern-name {{if attackPattern.selected "selected"}}">
+                {{#link-to "report-kill-chain-phase" model.report.id model.killChainPhase.phase_name (query-params attackPatternId=attackPattern.id)}}
+                  {{attackPattern.name}}
+                {{/link-to}}
+              </div>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+      <div class="col s7">
+        {{#if attackPatternSelected}}
+          {{attack-pattern-description attackPattern=attackPatternSelected
+                                       attackPatternGraph=attackPatternGraph
+                                       attackPatternRelationships=attackPatternRelationships
+                                       attackPatternRelatedObjects=attackPatternRelatedObjects}}
+        {{/if}}
+      </div>
+    </div>
+    {{/liquid-bind}}
+
+  </div>
+</div>

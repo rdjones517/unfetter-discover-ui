@@ -1,0 +1,23 @@
+<div class="modal-content">
+  <h4 class="red-text text-darken-4">{{alert.label}}</h4>
+  
+  <div class="row">
+    <div class="col s12">
+      <div class="red-text text-darken-4">
+        {{alert.error.message}}
+      </div>
+    </div>
+  </div>
+  {{#if alert.error.errors}}
+    <div class="row">
+      <div class="col s12 red-text text-darken-4">
+        {{#each alert.error.errors as |error|}}
+          <div>{{error.title}}</div>
+        {{/each}}
+      </div>
+    </div>
+  {{/if}}
+</div>
+<div class="modal-footer">
+  <button class="btn-flat waves-effect waves-light" {{action "dismissDialog"}}>OK</button>
+</div>

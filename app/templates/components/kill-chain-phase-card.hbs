@@ -1,0 +1,42 @@
+<div class="card kill-chain-phase-card">
+  <div class="card-content">
+    <div class="phase-label">
+      {{#link-to "report-kill-chain-phase" reportId phaseGroup.phaseName}}
+        {{undasherize-label phaseGroup.phaseName}}
+      {{/link-to}}
+    </div>
+  
+    <div>
+      <span class="text-muted">Score &bull;</span>
+      <strong>{{phaseGroup.mitigationScoreAdjusted}}</strong>
+    </div>
+
+    <div class="mitigation-progress-container">
+      {{#each phaseGroup.groups as |group|}}
+        <div class="row">
+          {{#tooltip-block tooltip=group.label
+                           class="col s2"
+                           position="left"
+                           computedClass=group.className}}
+            {{fa-icon group.icon fixedWidth=true}}
+          {{/tooltip-block}}
+          <div class="col s10">
+            {{#tooltip-block class="progress mitigation-progress"
+                            tooltip=group.value
+                            position="right"}}
+              <div class="determinate mitigation-{{group.labelClassName}}" style={{style-width group.percent}}></div>
+            {{/tooltip-block}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+
+    <div class="center-align">
+      <span class="text-muted attack-pattern-number">
+      Attack Patterns
+      &bull;
+      {{phaseGroup.attackPatterns.length}}
+      </span>
+    </div>
+  </div>
+</div>

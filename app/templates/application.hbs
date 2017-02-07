@@ -1,0 +1,20 @@
+<header class="application-header">
+  {{#if model.securityMarking.label}}
+  <div class="security-marking-label">
+    {{model.securityMarking.label}}
+  </div>
+  {{/if}}
+</header>
+{{header-navigation-bar}}
+
+{{liquid-outlet}}
+<footer class="application-footer">
+  {{#if model.securityMarking.label}}
+  <div class="security-marking-label">
+    {{model.securityMarking.label}}
+  </div>
+  {{/if}}
+</footer>
+
+{{liquid-modal}}
+<div id="ember-basic-dropdown-wormhole"></div>

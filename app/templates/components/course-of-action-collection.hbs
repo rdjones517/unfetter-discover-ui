@@ -1,0 +1,21 @@
+<h6 class="side-column-header">Courses of Action</h6>
+{{#each courseOfActionsSorted as |courseOfAction|}}
+  <li class="{{if courseOfAction.selected "selected-indicator" "unselected"}}">
+    <div class="course-of-action-label">
+      <strong>{{courseOfAction.name}}</strong>
+      <div class="course-of-action-references">
+        {{courseOfAction.external_references.0.source_name}}
+        &bull;
+        {{courseOfAction.external_references.0.external_id}}
+
+        {{#if courseOfAction.rating}}
+          <span class="right rating-label">
+            {{#tooltip-block tooltip=courseOfAction.ratingLabel}}
+            {{fa-icon courseOfAction.ratingIcon fixedWidth=true}}
+            {{/tooltip-block}}
+          </span>
+        {{/if}}
+      </div>
+    </div>
+  </li>
+{{/each}}

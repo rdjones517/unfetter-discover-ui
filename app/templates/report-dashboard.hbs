@@ -1,0 +1,37 @@
+<div class="row flex-container">
+  <div class="col s12 m6 l3 side-column">
+    {{course-of-action-collection courseOfActions=model.courseOfActions
+                                  referencedObjects=referencedObjects
+                                  relatedCourseOfActions=relatedCourseOfActions}}
+  </div>
+  <div class="col s12 m6 l9 main-column">
+    {{help-card help=model.help}}
+    {{report-dashboard-header class="row" report=model.report}}
+    
+    <div class="mitigation-summary">
+      <div class="left">
+        {{pie-plot hole=0.65
+                   width=170
+                   height=170
+                   values=mitigations.values
+                   labels=mitigations.labels
+                   markerColors=mitigationsColors
+                   annotationText=mitigationScoreAdjusted
+                   annotationFontSize=25
+                   marginTop=5
+                   marginBottom=10
+                   plotlyClick=(action "mitigationPlotSelected")}}
+      </div>
+      <div class="left mitigation-groups-collection">
+        {{mitigation-groups mitigationGroups=mitigationGroups
+                            report=model.report}}
+      </div>
+    </div>
+
+    <div class="kill-chain-phase-cards">
+      {{#each phaseNameGroups as |phaseNameGroup|}}
+        {{kill-chain-phase-card reportId=model.report.id phaseGroup=phaseNameGroup}}
+      {{/each}}
+    </div>
+  </div>
+</div>

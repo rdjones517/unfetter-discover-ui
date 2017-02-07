@@ -1,0 +1,19 @@
+<div class="col s9">
+  <h5>
+    {{stix-object-icon objectType="report"}}
+    <span class="icon-header-label">
+      {{#link-to "report-dashboard" report.id class="text-muted"}}
+        Report: {{report.name}}
+      {{/link-to}}
+    </span>
+  </h5>
+</div>
+<div class="col s3">
+  <div class="right-align published-column">
+    Published
+    &bull;
+    <span class="published">
+      {{moment-format report.published "YYYY-MM-DD HH:MM"}}
+    </span>
+  </div>
+</div>

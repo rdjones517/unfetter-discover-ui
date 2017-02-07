@@ -1,0 +1,59 @@
+<h5 class="attack-pattern-header">
+  {{attackPattern.name}}
+</h5>
+
+<p>
+  <h6>
+    <strong>Kill Chain Phases</strong>
+  </h6>
+  {{#each attackPattern.kill_chain_phases as |phase|}}
+    <div>
+      {{phase.kill_chain_name}}
+      &bull;
+      <span class="text-muted">{{phase.phase_name}}</span>
+    </div>
+  {{/each}}
+</p>
+
+<p>
+  <h6>
+    <strong>Description</strong>
+  </h6>
+  {{attackPattern.description}}
+</p>
+
+{{#if attackPattern.external_references}}
+<p>
+  <ul>
+  {{#each attackPattern.external_references as |reference|}}
+    <li>
+      {{#if reference.url}}
+        <a target="_blank" href="{{reference.url}}">{{reference.source_name}} &bull; {{reference.external_id}}</a>
+      {{else}}
+        {{reference.source_name}} &bull; {{reference.external_id}}
+      {{/if}}
+    </li>
+  {{/each}}
+  </ul>
+</p>
+{{/if}}
+
+{{#if attackPatternRelatedObjects}}
+<h6>
+  <strong>Related Objects</strong>
+</h6>
+
+{{#if attackPatternGraph.nodes}}
+  {{link-node-graph graph=attackPatternGraph
+                    classNames="link-node-graph-md"
+                    chargeStrength=-2000
+                    dragEnabled=false
+                    zoomEnabled=false}}
+{{/if}}
+
+{{#each attackPatternRelatedObjects as |relatedObject|}}
+  {{stix-object-item objectType=relatedObject.type
+                     label=relatedObject.name
+                     class="paragraph-block"}}
+{{/each}}
+{{/if}}
