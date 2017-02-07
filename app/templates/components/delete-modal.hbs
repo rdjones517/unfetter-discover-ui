@@ -1,0 +1,11 @@
+<div class="modal-content">
+  <h4 class="red-text">Confirmation Required</h4>
+  <p>Are you sure you want to delete <strong>{{deleteObject.name}}</strong>?</p>
+</div>
+<div class="modal-footer">
+  <button class="btn-flat waves-effect waves-light" {{action "dismissDialog"}}>No</button>
+  
+  <button class="btn-flat waves-effect waves-light red" {{action "confirmDialog"}}>
+    Yes
+  </button>
+</div>

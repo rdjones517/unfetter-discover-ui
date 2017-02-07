@@ -1,0 +1,12 @@
+{
+  "name": "unfetter-discover-ui",
+  "dependencies": {
+    "ember": "~2.7.0",
+    "ember-cli-shims": "0.1.1",
+    "ember-qunit-notifications": "0.1.0",
+    "materialize": "0.97.7",
+    "vis": "^4.16.0",
+    "plotly.js": "^1.16.2",
+    "font-awesome": "^4.6.3"
+  }
+}

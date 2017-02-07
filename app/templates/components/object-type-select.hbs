@@ -1,0 +1,21 @@
+<div class="col s4">
+{{md-select label=typeLabel
+            content=types
+            value=typeValue
+            prompt=typePrompt
+            optionLabelPath=typeLabelPath
+            optionValuePath=typeValuePath
+}}
+</div>
+<div class="col s8">
+{{#if objects}}
+  {{md-select label=objectLabel
+              content=objects
+              value=objectValue
+              prompt=objectPrompt
+              optionLabelPath=objectLabelPath
+              optionValuePath=objectValuePath
+  }}
+{{/if}}
+</div>
+{{yield}}

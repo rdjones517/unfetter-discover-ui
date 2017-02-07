@@ -1,0 +1,27 @@
+{{#if help.description}}
+  {{#if closed}}
+    <div class="help-icon right-align right">
+      <span class="pointer" {{action "toggleClosed"}}>
+        {{fa-icon closedIcon}}
+      </span>
+    </div>
+  {{else}}
+    <div class="row">
+      <div class="col s11">
+        <div class="help-description {{if collapsed "truncate"}}">
+          <span class="pointer" {{action "toggleCollapsed"}}>
+            {{fa-icon collapsedIcon}}
+          </span>    
+          {{help.description}}
+        </div>
+      </div>
+      <div class="col s1">
+        <div class="help-icon right-align">
+          <span class="pointer" {{action "toggleClosed"}}>
+          {{fa-icon closedIcon}}
+          </span>
+        </div>
+      </div>
+    </div>
+  {{/if}}
+{{/if}}

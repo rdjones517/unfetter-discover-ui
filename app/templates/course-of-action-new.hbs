@@ -1,0 +1,100 @@
+<div class="container">
+{{help-card help=model.help}}
+<h4>
+  {{stix-object-icon objectType="course-of-action"}}
+  Course of Action
+</h4>
+
+<div class="row">
+  {{md-input label="Name"
+           value=model.item.name
+           required=true
+           validate=true
+           class="col s12"}}
+</div>
+
+<div class="row">
+  {{md-textarea label="Description"
+                value=model.item.description
+                class="col s12"}}
+</div>
+
+<h5>Labels</h5>
+
+<div class="row">
+  <div class="col s1">
+    {{md-btn text="Add" action="addLabel" actionArg=model.item}}
+  </div>
+</div>
+
+{{#each model.item.labels as |label|}}
+
+  {{#md-card}}
+    {{#md-card-content}}
+      <div class="row">
+        {{md-input label="Label"
+                   value=label.label
+                   validate=true
+                   class="col s12"}}
+      </div>
+    {{/md-card-content}}
+    {{#md-card-action}}
+      {{md-btn text="Remove" action="removeLabel" actionArg=label}}
+    {{/md-card-action}}
+  {{/md-card}}
+
+{{/each}}
+
+<h5>Rating Lables</h5>
+<div class="row">
+  {{#each model.item.x_unfetter_rating_labels as |label|}}
+    {{md-input label="label"
+               value=label.label
+               validate=true
+               class="col s2"}}
+  {{/each}}
+</div>
+
+<h5>External References</h5>
+
+<div class="row">
+  <div class="col s1">
+    {{md-btn text="Add" action="addExternalReference" actionArg=model.item}}
+  </div>
+</div>
+
+{{#each model.item.external_references as |externalReference|}}
+
+  {{#md-card title=externalReference.external_id}}
+    {{#md-card-content}}
+      <div class="row">
+        {{md-input label="External ID"
+                   value=externalReference.external_id
+                   validate=true
+                   class="col s2"}}
+        {{md-input label="Source Name"
+                   value=externalReference.source_name
+                   validate=true
+                   class="col s4"}}
+        {{md-input label="URL"
+                   value=externalReference.url
+                   validate=true
+                   class="col s6"}}
+      </div>
+    {{/md-card-content}}
+    {{#md-card-action}}
+      {{md-btn text="Remove" action="removeExternalReference" actionArg=externalReference}}
+    {{/md-card-action}}
+  {{/md-card}}
+
+{{/each}}
+
+<div class="row">
+  <div class="col s12 right-align">
+    {{md-btn text="Save" action="save" actionArg=model.item}}
+  </div>
+</div>
+
+{{alert-card alert=model.alert}}
+
+</div>

@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col m2">
+    <h5>
+      {{stix-object-icon objectType="relationship"}}
+      Relationship Explorer
+    </h5>
+
+    <table>
+      <thead>
+        <tr>
+          <th>
+            <i class="material-icons" title="Reorder">apps</i>
+          </th>
+          <th>
+            <i class="material-icons stix-object-icon menu-column-icon" title="Toggle Visibility">visibility</i>
+          </th>
+          <th>Object Type</th>
+          <th class="right-align">Items</th>
+        </tr>
+      </thead>
+      {{#sortable-objects tagName="tbody" sortableObjectList=objectTypeCounts}}
+        {{#each objectTypeCounts as |objectType|}}
+          {{#draggable-object tagName="tr" content=objectType isSortable=true}}
+            <td>
+              <i class="material-icons drag-reorder" title="Reorder">apps</i>
+            </td>
+            <td>
+              {{stix-object-icon-switch objectType=objectType.label checked=objectType.enabled}}
+            </td>
+            <td class="{{objectType.label}}-label {{if objectType.enabled "label-checked" "label-unchecked"}}">{{undasherize-label objectType.label}}</td>
+            <td class="right-align">{{objectType.count}}</td>
+          {{/draggable-object}}
+        {{/each}}
+      {{/sortable-objects}}
+    </table>
+
+    {{#if selectedRecord}}
+      <h5>{{undasherize-label selectedRecord.type}}</h5>
+      {{#if selectedRecord.name}}
+        {{stix-object-item objectType=selectedRecord.type
+                           label=selectedRecord.name}}
+      {{else if selectedRecord.object_type}}
+        {{observable-path-item observablePath=selectedRecord}}
+      {{/if}}
+    {{/if}}
+  </div>
+  <div class="col m10">
+    {{relationship-axis-graph objectTypeRelationships=objectTypeRelationships
+                              relationships=model.relationships
+                              nodeMouseover=(action "graphNodeMouseover")
+                              nodeMouseout=(action "graphNodeMouseout")}}
+  </div>
+</div>

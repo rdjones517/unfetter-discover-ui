@@ -1,0 +1,34 @@
+<div class="container">
+  {{help-card help=model.help}}
+  <h4>
+    {{stix-object-icon objectType="report"}}
+    Reports
+  </h4>
+
+  <div class="row">
+    <div class="col s6">
+      {{#link-to "report-new" (query-params page=1 step="selection") class="btn waves-effect waves-light"}}
+        New
+      {{/link-to}}
+      &nbsp;{{md-btn text="Download" action="downloadBundle" actionArg=model.items}}
+    </div>
+
+    <div class="col s6 right-align">
+      <span class="right-align">Results: {{model.items.length}}</span>
+    </div>
+  </div>
+
+  {{#md-collection content=model.items as |item|}}
+    <div class="collection-item">
+      {{#link-to "report-dashboard" item.id}}
+        {{item.name}}
+      {{/link-to}}
+        {{moment-format item.created "YYYY-MM-DD  HH:MM"}}
+      <div class="secondary-content">
+        {{#link-to (query-params deleteObjectId=item.id) class="red-text"}}
+          <i class="material-icons">delete</i>
+        {{/link-to}}
+      </div>
+    </div>
+  {{/md-collection}}
+</div>

@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col m12">
+    <h4>
+      {{stix-object-icon objectType="relationship"}}
+      Link Explorer
+    </h4>
+  </div>
+</div>
+
+<div>
+  <div class="row">
+    <div class="col m1">
+      <h5>Forces</h5>
+    </div>
+    <div class="col m1">
+      Center
+      {{md-switch checked=centerEnabled}}
+    </div>
+    <div class="col m1">
+      Collide
+      {{md-switch checked=collideEnabled}}
+    </div>
+    <div class="col m1">
+      Columns
+      {{md-switch checked=columnPositionEnabled}}
+    </div>
+    <div class="col m1">
+      Charge
+      {{md-switch checked=chargeEnabled}}
+    </div>
+    <div class="col m1">
+      Link
+      {{md-switch checked=linkEnabled}}
+    </div>
+    <div class="col m6 right-align">
+      <small>
+        Nodes &bull; {{graph.nodes.length}}
+        &bull;
+        Links &bull; {{graph.links.length}}
+      </small>
+      <button class="btn waves-effect waves-light" {{action "resetGraph"}}>Reset</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col m8">
+      {{stix-object-item objectType="indicator" label="Indicator" class="left paragraph-inline-block"}}
+      {{stix-object-item objectType="attack-pattern" label="Attack Pattern" class="left paragraph-inline-block"}}
+      {{stix-object-item objectType="course-of-action" label="Course of Action" class="left paragraph-inline-block"}}
+      {{stix-object-item objectType="tool" label="Tool" class="left paragraph-inline-block"}}
+      {{stix-object-item objectType="observable-path" label="Observable Path" class="left paragraph-inline-block"}}
+      {{stix-object-item objectType="intrusion-set" label="Intrusion Set" class="left paragraph-inline-block"}}
+      {{stix-object-item objectType="malware" label="Malware" class="left paragraph-inline-block"}}
+    </div>
+    <div class="col m4 right-align">
+      {{#if selectedRecord}}
+        {{#if selectedRecord.name}}
+          {{stix-object-item objectType=selectedRecord.type label=selectedRecord.name}}
+        {{else if selectedRecord.object_type}}
+          {{observable-path-item observablePath=selectedRecord}}
+        {{/if}}
+      {{/if}}
+    </div>
+  </div>
+</div>
+
+{{link-node-graph graph=graph
+                  forcesEnabled=forcesEnabled
+                  nodeMouseover=(action "graphNodeMouseover")
+                  nodeMouseout=(action "graphNodeMouseout")}}
