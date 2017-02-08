@@ -17,6 +17,9 @@ RUN npm install
 RUN bower install --allow-root
 COPY . $WORKING_DIRECTORY
 
+# The NPM package depends on TAR package, which has a test directory with an encrypted tgz file, that gets blocked by some antivirus scanners. Removing it.
+RUN find / -name "cb-never*.tgz" -delete
+
 # Start Application
 EXPOSE 4200 50000
 CMD [ "ember", "server", "--live-reload-port", "50000" ]
