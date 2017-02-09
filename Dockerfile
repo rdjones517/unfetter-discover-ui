@@ -1,9 +1,7 @@
 FROM node:slim
 
 # Install packages
-RUN npm install -g ember-cli
-RUN npm install -g bower
-RUN apt-get update && apt-get install git -y
+RUN npm install -g ember-cli; npm install -g bower; apt-get update && apt-get install git -y
 
 # Create Application Directory
 ENV WORKING_DIRECTORY /usr/share/unfetter-discover-ui
